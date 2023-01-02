@@ -1,0 +1,30 @@
+<form id="upload-form">
+    <input type="file" id="file-input" />
+    <input type="text" id="custom-text" />
+    <input type="hidden" id="storage-account" value="11177016qrcode" />
+    <input type="hidden" id="storage-key" value="cRF8iZARPDakrmZDmdkIyY6yZwU2yll+kFRmwv75lZDDlSZAblm66nlsoraKiIVpTY2wHIDorgY1+AStAIa+Sw==" />
+    <input type="hidden" id="storage-sas" value="BlobEndpoint=https://11177016qrcode.blob.core.windows.net/;QueueEndpoint=https://11177016qrcode.queue.core.windows.net/;FileEndpoint=https://11177016qrcode.file.core.windows.net/;TableEndpoint=https://11177016qrcode.table.core.windows.net/;SharedAccessSignature=sv=2021-06-08&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2023-01-02T20:49:11Z&st=2023-01-02T12:49:11Z&spr=https,http&sig=RUk4nwbJciHGLHYG3NXZNkQH%2F43mnB5CW9PgBO1uuRM%3D" />
+    <button type="submit">上傳</button>
+</form>
+  
+<div id="upload-result"></div>
+  
+<script>
+    document.getElementById('upload-form').addEventListener('submit', async event => {
+      event.preventDefault();
+  
+    // 讀取表單資料
+    const file = document.getElementById('file-input').files[0];
+    const customText = document.getElementById('custom-text').value;
+    const storageAccount = document.getElementById('storage-account').value;
+    const storageKey = document.getElementById('storage-key').value;
+    const storageSas = document.getElementById('storage-sas').value;
+  
+    // 使用 Azure SDK 或 REST API 來上傳照片到 Azure Blob
+    const uploadedUrl = await uploadToAzureBlob(storageAccount, storageKey, storageSas, file);
+  
+    // 使用 DOM 操作來修改網頁元素，以顯示自定義內容
+    document.getElementById('upload-result').innerHTML = `已上傳照片：${uploadedUrl}<br>自定義內容：${customText}`;
+});
+</script>
+  

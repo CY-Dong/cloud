@@ -1,0 +1,26 @@
+<html>
+  <body>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+      <input type="file" name="image" accept="image/*">
+      <input type="submit" value="Upload">
+    </form>
+    <div id="image-container"></div>
+    <script>
+      // 發送 HTTP 請求並接收圖片資訊
+      const form = document.querySelector("form");
+      form.addEventListener("submit", event => {
+        event.preventDefault();
+        const formData = new FormData(form);
+        fetch("http://localhost:5000/upload", { method: "POST", body: formData })
+          .then(response => response.json())
+          .then(data => {
+            // 在網頁上顯示圖片
+            const img = document.createElement("img");
+            img.src = data.url;
+            document.getElementById("image-container").appendChild(img);
+          });
+      });
+    </script>
+    </form>     
+  </body>
+</html>
