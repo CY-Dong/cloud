@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Upload Image</title>
+</head>
+<body>
+    <!-- 表單 -->
+    <form method="post" enctype="multipart/form-data" action="https://<your-function-app>.azurewebsites.net/api/upload-image">
+        <input type="file" name="image" />
+        <input type="submit" value="Upload" />
+    </form>
+
+    <!-- JavaScript -->
+    <script>
+        // 監聽表單提交事件
+        document.querySelector("form").addEventListener("submit", event => {
+            event.preventDefault(); // 防止瀏覽器重新整理
+            // 建立 FormData 物件
+            const formData = new FormData(event.target);
+            // 發送 HTTP POST 請求
+            fetch(event.target.action, {
+                method: "POST",
+                body: formData
+            }).then(response => response.json()).then(data => {
+                // 顯示圖片資訊
+                const imageElement = document.createElement("img");
+                imageElement.src = data.url;
+                document.body.appendChild(imageElement);
+            });
+        });
+    </script>
+</body>
+</html>
