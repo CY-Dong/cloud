@@ -32,12 +32,9 @@ def upload_image():
   blob_data = blob_client.download_blob().readall()
 
   #將檔案載下來
-  path = 'F:/clould/finalproject/data/' + blob_name
-  with open( path, "wb") as download_file:
-      download_file.write( blob_data )
-
+  temp = np.asarray( bytearray(blob_data), dtype="uint8") 
   # 读取图像
-  read_image = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
+  read_image = cv2.imdecode(temp, cv2.IMREAD_GRAYSCALE)
 
   # 查找QR码
   codes = pyzbar.decode(read_image)
